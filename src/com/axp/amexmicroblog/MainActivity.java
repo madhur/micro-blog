@@ -1,6 +1,7 @@
 package com.axp.amexmicroblog;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -22,7 +23,7 @@ public class MainActivity extends Activity
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.fragment_main);
+		setContentView(R.layout.activity_main);
 
 		mPlanetTitles = getResources().getStringArray(R.array.drawer_array);
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -35,7 +36,6 @@ public class MainActivity extends Activity
 			public void onDrawerClosed(View view)
 			{
 				super.onDrawerClosed(view);
-				// getActionBar().;
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
 			}
@@ -44,7 +44,6 @@ public class MainActivity extends Activity
 			public void onDrawerOpened(View drawerView)
 			{
 				super.onDrawerOpened(drawerView);
-				// getActionBar().setTitle("sdfsdf");
 				invalidateOptionsMenu(); // creates call to
 											// onPrepareOptionsMenu()
 			}
@@ -107,6 +106,21 @@ public class MainActivity extends Activity
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position)
 	{
+		Fragment fragment;
+		
+		switch(position)
+		{
+			case 0:
+				 fragment=new MainFragment();
+				 getFragmentManager().beginTransaction().replace(R.id.content_frame,fragment).commit();
+				 break;
+			
+			case 4:
+				AboutDialog dialog=new AboutDialog();
+				dialog.show(getFragmentManager(), "about");
+				break;
+			
+		}
 		// Create a new fragment and specify the planet to show based on
 		// position
 		// Fragment fragment = new PlanetFragment();
@@ -121,15 +135,14 @@ public class MainActivity extends Activity
 		//
 		// // Highlight the selected item, update the title, and close the
 		// drawer
-		// mDrawerList.setItemChecked(position, true);
+		 mDrawerList.setItemChecked(position, true);
 		// setTitle(mPlanetTitles[position]);
-		// mDrawerLayout.closeDrawer(mDrawerList);
+		 mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	public void setTitle(CharSequence title)
 	{
-		// mTitle = title;
-		// getActionBar().setTitle(mTitle);
+		 getActionBar().setTitle(title);
 	}
 
 }
