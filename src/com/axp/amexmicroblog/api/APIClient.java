@@ -12,16 +12,17 @@ public class APIClient
 	private static APIClient client;
 	private static RestAdapter adapter;
 	private static BlogAPI blogApi;
-	private static LoginResponse response;
-
+	private static String userName, passWord, authHeader;
+	
 	private APIClient()
 	{
 
 	}
 
-	public static LoginResponse getInstance(String username, String password)
+	public static APIClient getInstance(String username, String password)
 			throws Exception
 	{
+		//LoginResponse response = null;
 		try
 		{
 			adapter = new RestAdapter.Builder().setEndpoint(Consts.LOGIN_API_URL).build();
@@ -31,14 +32,16 @@ public class APIClient
 				client = new APIClient();
 
 				blogApi = adapter.create(BlogAPI.class);
+				
+				userName=username;
+				passWord=password;
+				authHeader= EncodePassword(username, password);
 
-				response = blogApi.Login(username, EncodePassword(username, password));
-
-				return response;
+				return client;
 
 			}
 			else
-				return response;
+				return client;
 		}
 		catch (Exception e)
 		{
@@ -46,9 +49,10 @@ public class APIClient
 		}
 	}
 
-	public static void Login()
+	public LoginResponse GetMessageList()
 	{
-
+		LoginResponse response = blogApi.Login(userName, authHeader);
+		return response;
 	}
 
 	private static String EncodePassword(String username, String password)

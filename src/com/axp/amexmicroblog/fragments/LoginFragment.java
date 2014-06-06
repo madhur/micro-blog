@@ -1,5 +1,11 @@
-package com.axp.amexmicroblog;
+package com.axp.amexmicroblog.fragments;
 
+import com.axp.amexmicroblog.App;
+import com.axp.amexmicroblog.Consts;
+import com.axp.amexmicroblog.MainActivity;
+import com.axp.amexmicroblog.R;
+import com.axp.amexmicroblog.R.id;
+import com.axp.amexmicroblog.R.layout;
 import com.axp.amexmicroblog.api.APIClient;
 import com.axp.amexmicroblog.api.LoginResponse;
 
@@ -45,7 +51,8 @@ public class LoginFragment extends Fragment
 	private class LoginTask extends AsyncTask<Integer, Integer, LoginResponse>
 	{
 		String username, password;
-
+		APIClient client;
+		
 		public LoginTask(String username, String password)
 		{
 			this.username = username;
@@ -66,7 +73,9 @@ public class LoginFragment extends Fragment
 			LoginResponse response = null;
 			try
 			{
-				response = APIClient.getInstance(username, password);
+				client = APIClient.getInstance(username, password);
+				response=client.GetMessageList();
+				
 			}
 			catch (Exception e)
 			{
@@ -91,6 +100,8 @@ public class LoginFragment extends Fragment
 				Intent i = new Intent();
 				i.setClass(getActivity(), MainActivity.class);
 				startActivity(i);
+				
+				app.setApiClient(client);
 
 			}
 			else

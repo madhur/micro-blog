@@ -1,5 +1,7 @@
 package com.axp.amexmicroblog;
 
+import com.axp.amexmicroblog.fragments.MainFragment;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
