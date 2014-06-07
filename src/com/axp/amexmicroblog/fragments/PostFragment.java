@@ -1,9 +1,16 @@
 package com.axp.amexmicroblog.fragments;
 
+import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
+import com.axp.amexmicroblog.TaskListener;
+import com.axp.amexmicroblog.tasks.PostTask;
+import com.axp.amexmicroblog.tasks.TaskRequest;
 
-import android.app.Fragment;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
+
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,8 +18,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Toast;
 
-public class PostFragment extends BaseFragment
+public class PostFragment extends BaseFragment implements TaskListener
 {
 	private EditText postEditText;
 	
@@ -36,12 +44,39 @@ public class PostFragment extends BaseFragment
 	{
 		 if(item.getItemId()==R.id.post_blog)
 		 {
-			 
+			 TaskRequest postRequest=new TaskRequest();
+			 postRequest.setPostMessage(postEditText.getText().toString());
+			 new PostTask(getActivity(), this).execute(postRequest);
 			 
 			 
 			 return true;
 		 }
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void OnTaskStarted()
+	{
+		
+	}
+
+	@Override
+	public void OnTaskFinished(Object result)
+	{
+		
+		if(TextUtils.isEmpty((CharSequence) result))
+		{
+			Crouton.showText(getActivity(), "Your post was successfully published", Style.INFO);
+			
+			MainActivity main=(MainActivity) getActivity();
+			main.LoadMainFragment();
+			
+		}
+		else
+		{
+			Crouton.showText(getActivity(), (CharSequence) result, Style.ALERT);
+			
+		}
 	}
 
 }

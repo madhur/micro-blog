@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.axp.amexmicroblog.TaskListener;
 
-public class PostTask extends BaseTask
+public class FollowTask extends BaseTask
 {
 
-	public PostTask(Context context, TaskListener listener)
+	public FollowTask(Context context, TaskListener listener)
 	{
 		super(context, listener);
 	}
@@ -27,17 +27,18 @@ public class PostTask extends BaseTask
 	@Override
 	protected Object doInBackground(TaskRequest... params)
 	{
-		String result;
+		String result="";
 		try
 		{
-			result=client.CreatePost(params[0].getPostMessage());
+			client.SetUserStatus(params[0].getTargetUser(), params[0].isFollow());
 		}
 		catch (Exception e)
 		{
-			result= e.getMessage();
+			result = e.getMessage();
 		}
-
+		
 		return result;
 
 	}
+
 }

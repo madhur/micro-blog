@@ -1,7 +1,7 @@
 package com.axp.amexmicroblog.api;
 
-import java.util.ArrayList;
-
+import retrofit.http.Field;
+import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.Header;
 import retrofit.http.POST;
@@ -17,18 +17,22 @@ public interface BlogAPI
 	String[] GetUsersFollowed(@Query("username") String username, @Header("Authorization") String header);
 
 	@GET("/userslike")
-	ArrayList<String> SearchUser(@Query("username") String username, @Header("Authorization") String header);
+	String[] SearchUser(@Query("username") String username, @Header("Authorization") String header);
 
 	@POST("/followuser")
-	void FollowUser(@Query("username") String username, String targetuser, @Header("Authorization") String header);
+	@FormUrlEncoded
+	Object FollowUser(@Field("username") String username, @Field("targetuser") String targetuser, @Header("Authorization") String header);
 
 	@POST("/unfollowuser")
-	void UnFollowUser(@Query("username") String username, String targetuser, @Header("Authorization") String header);
+	@FormUrlEncoded
+	Object UnFollowUser(@Field("username") String username,  @Field("targetuser") String targetuser, @Header("Authorization") String header);
 
 	@POST("/createPost")
-	void CreatePost(@Query("username") String username, String postMessage, @Header("Authorization") String header);
+	@FormUrlEncoded
+	String CreatePost(@Field("username") String username, @Field("message") String postMessage, @Header("Authorization") String header);
 
 	@POST("/createuser")
-	void CreateUser(@Query("username") String username, String password);
+	@FormUrlEncoded
+	String CreateUser(@Field("username") String username, @Field("plainTextPassword") String password);
 
 }

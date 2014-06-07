@@ -3,13 +3,9 @@ package com.axp.amexmicroblog.tasks;
 import android.content.Context;
 
 import com.axp.amexmicroblog.TaskListener;
-import com.axp.amexmicroblog.adapters.FollowerAdapter;
 
 public class GetFollowersTask extends BaseTask
 {
-
-	
-
 	public GetFollowersTask(Context context, TaskListener listener)
 	{
 		super(context, listener);
@@ -31,7 +27,7 @@ public class GetFollowersTask extends BaseTask
 
 
 	@Override
-	protected Object doInBackground(Credentials... params)
+	protected Object doInBackground(TaskRequest... params)
 	{
 		String response[] = client.GetFollowers();
 		return response;

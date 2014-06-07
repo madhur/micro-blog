@@ -28,6 +28,11 @@ public class MessagesAdapter extends BaseAdapter
 		this.messages = (ArrayList<Content>) content;
 		this.context=context;
 	}
+	
+	public void  SetMessages(ArrayList<Content> messages)
+	{
+		this.messages=messages;
+	}
 
 	@Override
 	public int getCount()
@@ -60,7 +65,7 @@ public class MessagesAdapter extends BaseAdapter
 			holder = new ViewHolder();
 			holder.message = (TextView) view.findViewById(R.id.messageTextView);
 			holder.age = (TextView) view.findViewById(R.id.ageTextView);
-
+			
 			view.setTag(holder);
 
 		}

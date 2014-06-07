@@ -5,14 +5,12 @@ import com.axp.amexmicroblog.Consts;
 import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
-import com.axp.amexmicroblog.api.APIClient;
 import com.axp.amexmicroblog.api.LoginResponse;
-import com.axp.amexmicroblog.tasks.Credentials;
 import com.axp.amexmicroblog.tasks.LoginTask;
+import com.axp.amexmicroblog.tasks.TaskRequest;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,7 +21,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
 public class LoginFragment extends Fragment implements TaskListener
 {
@@ -49,7 +46,7 @@ public class LoginFragment extends Fragment implements TaskListener
 			@Override
 			public void onClick(View v)
 			{
-				Credentials creds=new Credentials();
+				TaskRequest creds=new TaskRequest();
 				creds.setUsername(usernameEditText.getText().toString());
 				creds.setPassword(passwordEditText.getText().toString());
 				

@@ -1,7 +1,5 @@
 package com.axp.amexmicroblog.api;
 
-import java.util.ArrayList;
-
 public class FollowersResponse extends BaseResponse
 {
 	

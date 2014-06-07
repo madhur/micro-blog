@@ -1,15 +1,7 @@
 package com.axp.amexmicroblog.tasks;
 
 import android.content.Context;
-import android.content.Intent;
-import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.Toast;
-
 import com.axp.amexmicroblog.App;
-import com.axp.amexmicroblog.Consts;
-import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.api.APIClient;
 import com.axp.amexmicroblog.api.LoginResponse;
@@ -24,8 +16,6 @@ public class LoginTask extends BaseTask
 
 	String username, password;
 	APIClient client;
-	
-	
 
 	@Override
 	protected void onPreExecute()
@@ -35,7 +25,7 @@ public class LoginTask extends BaseTask
 	}
 
 	@Override
-	protected LoginResponse doInBackground(Credentials... params)
+	protected LoginResponse doInBackground(TaskRequest... params)
 	{
 
 		LoginResponse response = null;

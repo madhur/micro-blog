@@ -4,8 +4,15 @@ import com.axp.amexmicroblog.fragments.FollowersFragment;
 import com.axp.amexmicroblog.fragments.MainFragment;
 import com.axp.amexmicroblog.fragments.PostFragment;
 
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.Fragment;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -64,7 +71,7 @@ public class MainActivity extends Activity
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		
+
 		LoadMainFragment();
 
 	}
@@ -108,63 +115,86 @@ public class MainActivity extends Activity
 			selectItem(position);
 		}
 	}
-	
-	private void LoadMainFragment()
+
+	public void LoadMainFragment()
 	{
-		Fragment fragment=new MainFragment();
-		 getFragmentManager().beginTransaction().replace(R.id.content_frame,fragment).commit();
-		
+		Fragment fragment = new MainFragment();
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+	}
+
+	@Override
+	protected void onDestroy()
+	{
+		super.onDestroy();
+		Crouton.cancelAllCroutons();
+
 	}
 
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position)
 	{
 		Fragment fragment;
-		
-		switch(position)
+
+		switch (position)
 		{
 			case 0:
 				LoadMainFragment();
-				 break;
-				 
+				break;
+
 			case 1:
-				fragment=new FollowersFragment();
+				fragment = new FollowersFragment();
 				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
 				break;
-				
+
 			case 2:
-				fragment=new PostFragment();
+				fragment = new PostFragment();
 				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
 				break;
-				
+
+			case 3:
+				AlertDialog.Builder builder = new Builder(this);
+				builder.setMessage("Are you sure you want to logout?").setTitle(R.string.app_name).setPositiveButton(android.R.string.ok, new OnClickListener()
+				{
+
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						Intent i = new Intent();
+						i.setClass(MainActivity.this, LoginActivity.class);
+						i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
+								| Intent.FLAG_ACTIVITY_NEW_TASK);
+
+						startActivity(i);
+					}
+				});
+				builder.setNegativeButton(android.R.string.cancel, new OnClickListener()
+				{
+
+					@Override
+					public void onClick(DialogInterface dialog, int which)
+					{
+						dialog.dismiss();
+					}
+				});
+
+				builder.show();
+				break;
+
 			case 4:
-				AboutDialog dialog=new AboutDialog();
+				AboutDialog dialog = new AboutDialog();
 				dialog.show(getFragmentManager(), "about");
 				break;
-			
+
 		}
-		// Create a new fragment and specify the planet to show based on
-		// position
-		// Fragment fragment = new PlanetFragment();
-		// Bundle args = new Bundle();
-		// args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
-		// fragment.setArguments(args);
-		//
-		// // Insert the fragment by replacing any existing fragment
-		// FragmentManager fragmentManager = getFragmentManager();
-		// fragmentManager.beginTransaction().replace(R.id.content_frame,
-		// fragment).commit();
-		//
-		// // Highlight the selected item, update the title, and close the
-		// drawer
-		 mDrawerList.setItemChecked(position, true);
-		// setTitle(mPlanetTitles[position]);
-		 mDrawerLayout.closeDrawer(mDrawerList);
+
+		mDrawerList.setItemChecked(position, true);
+		mDrawerLayout.closeDrawer(mDrawerList);
 	}
 
 	public void setTitle(CharSequence title)
 	{
-		 getActionBar().setTitle(title);
+		getActionBar().setTitle(title);
 	}
 
 }

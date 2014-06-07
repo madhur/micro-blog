@@ -7,7 +7,7 @@ import com.axp.amexmicroblog.api.APIClient;
 import android.content.Context;
 import android.os.AsyncTask;
 
-public abstract class BaseTask extends AsyncTask<Credentials, Integer, Object>
+public abstract class BaseTask extends AsyncTask<TaskRequest, Integer, Object>
 {
 	protected APIClient client;
 	protected Context context;
