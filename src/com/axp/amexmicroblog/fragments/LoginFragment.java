@@ -4,10 +4,11 @@ import com.axp.amexmicroblog.App;
 import com.axp.amexmicroblog.Consts;
 import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
-import com.axp.amexmicroblog.R.id;
-import com.axp.amexmicroblog.R.layout;
+import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.api.APIClient;
 import com.axp.amexmicroblog.api.LoginResponse;
+import com.axp.amexmicroblog.tasks.Credentials;
+import com.axp.amexmicroblog.tasks.LoginTask;
 
 import android.app.Fragment;
 import android.content.Intent;
@@ -20,11 +21,16 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-public class LoginFragment extends Fragment
+public class LoginFragment extends Fragment implements TaskListener
 {
 
+	private ProgressBar progressBar;
+	private LinearLayout loginPanel;
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
@@ -33,7 +39,9 @@ public class LoginFragment extends Fragment
 
 		final EditText usernameEditText = ((EditText) v.findViewById(R.id.UserNameEditText));
 		final EditText passwordEditText = ((EditText) v.findViewById(R.id.PasswordEditText));
-
+		progressBar=(ProgressBar) v.findViewById(R.id.progress_bar);
+		loginPanel=(LinearLayout) v.findViewById(R.id.login_panel);
+		
 		Button loginButton = (Button) v.findViewById(R.id.LoginButton);
 		loginButton.setOnClickListener(new OnClickListener()
 		{
@@ -41,73 +49,47 @@ public class LoginFragment extends Fragment
 			@Override
 			public void onClick(View v)
 			{
-				new LoginTask(usernameEditText.getText().toString(), passwordEditText.getText().toString()).execute(0);
+				Credentials creds=new Credentials();
+				creds.setUsername(usernameEditText.getText().toString());
+				creds.setPassword(passwordEditText.getText().toString());
+				
+				new LoginTask(getActivity(), LoginFragment.this).execute(creds);
 			}
 		});
 
 		return v;
 	}
 
-	private class LoginTask extends AsyncTask<Integer, Integer, LoginResponse>
+	@Override
+	public void OnTaskStarted()
 	{
-		String username, password;
-		APIClient client;
+		progressBar.setVisibility(View.VISIBLE);
+		loginPanel.setVisibility(View.GONE);
+	}
+
+	@Override
+	public void OnTaskFinished(Object result)
+	{
+		progressBar.setVisibility(View.GONE);
+		loginPanel.setVisibility(View.VISIBLE);
 		
-		public LoginTask(String username, String password)
+		if (result != null)
 		{
-			this.username = username;
-			this.password = password;
-		}
+			Log.v(Consts.TAG, result.toString());
 
-		@Override
-		protected void onPreExecute()
-		{
-			super.onPreExecute();
-			Toast.makeText(getActivity(), "Authenticating", Toast.LENGTH_SHORT).show();
-		}
+			App app = (App) getActivity().getApplicationContext();
 
-		@Override
-		protected LoginResponse doInBackground(Integer... params)
-		{
-
-			LoginResponse response = null;
-			try
-			{
-				client = APIClient.getInstance(username, password);
-				response=client.GetMessageList();
-				
-			}
-			catch (Exception e)
-			{
-				e.printStackTrace();
-			}
-
-			return response;
-		}
-
-		@Override
-		protected void onPostExecute(LoginResponse result)
-		{
-			super.onPostExecute(result);
-			if (result != null)
-			{
-				Log.v(Consts.TAG, result.toString());
-
-				App app = (App) getActivity().getApplicationContext();
-
-				app.setLoginResponse(result);
-				
-				Intent i = new Intent();
-				i.setClass(getActivity(), MainActivity.class);
-				startActivity(i);
-				
-				app.setApiClient(client);
-
-			}
-			else
-				Log.v(Consts.TAG, "is null");
+			app.setLoginResponse((LoginResponse) result);
+			
+			
+			Intent i = new Intent();
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+			i.setClass(getActivity(), MainActivity.class);
+			startActivity(i);
 
 		}
+		else
+			Log.v(Consts.TAG, "is null");
 
 	}
 

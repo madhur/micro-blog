@@ -54,6 +54,14 @@ public class APIClient
 		LoginResponse response = blogApi.Login(userName, authHeader);
 		return response;
 	}
+	
+	public String[] GetFollowers()
+	{
+		String response[]=blogApi.GetUsersFollowed(userName, authHeader);
+		
+		return response;
+		
+	}
 
 	private static String EncodePassword(String username, String password)
 	{

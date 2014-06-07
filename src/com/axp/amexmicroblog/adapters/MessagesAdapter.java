@@ -1,8 +1,9 @@
-package com.axp.amexmicroblog;
+package com.axp.amexmicroblog.adapters;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.api.Content;
 
 import android.content.Context;

@@ -35,7 +35,7 @@ public class AboutDialog extends DialogFragment
 		});
 
 		builder.setView(v);
-		builder.setTitle("About this App");
+		builder.setTitle("About Microblog");
 		return builder.create();
 
 	}

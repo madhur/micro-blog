@@ -9,7 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({ "id", "message", "createdDate", "retrievalDate", "age" })
-public class Content {
+public class Content
+{
 
 	@JsonProperty("id")
 	private Integer id;
@@ -24,62 +25,74 @@ public class Content {
 	private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
 	@JsonProperty("id")
-	public Integer getId() {
+	public Integer getId()
+	{
 		return id;
 	}
 
 	@JsonProperty("id")
-	public void setId(Integer id) {
+	public void setId(Integer id)
+	{
 		this.id = id;
 	}
 
 	@JsonProperty("message")
-	public String getMessage() {
+	public String getMessage()
+	{
 		return message;
 	}
 
 	@JsonProperty("message")
-	public void setMessage(String message) {
+	public void setMessage(String message)
+	{
 		this.message = message;
 	}
 
 	@JsonProperty("createdDate")
-	public Long getCreatedDate() {
+	public Long getCreatedDate()
+	{
 		return createdDate;
 	}
 
 	@JsonProperty("createdDate")
-	public void setCreatedDate(Long createdDate) {
+	public void setCreatedDate(Long createdDate)
+	{
 		this.createdDate = createdDate;
 	}
 
 	@JsonProperty("retrievalDate")
-	public Long getRetrievalDate() {
+	public Long getRetrievalDate()
+	{
 		return retrievalDate;
 	}
 
 	@JsonProperty("retrievalDate")
-	public void setRetrievalDate(Long retrievalDate) {
+	public void setRetrievalDate(Long retrievalDate)
+	{
 		this.retrievalDate = retrievalDate;
 	}
 
 	@JsonProperty("age")
-	public String getAge() {
+	public String getAge()
+	{
 		return age;
 	}
 
 	@JsonProperty("age")
-	public void setAge(String age) {
+	public void setAge(String age)
+	{
 		this.age = age;
 	}
 
 	@JsonAnyGetter
-	public Map<String, Object> getAdditionalProperties() {
+	public Map<String, Object> getAdditionalProperties()
+	{
 		return this.additionalProperties;
 	}
 
 	@JsonAnySetter
-	public void setAdditionalProperty(String name, Object value) {
+	public void setAdditionalProperty(String name, Object value)
+	{
 		this.additionalProperties.put(name, value);
 	}
 

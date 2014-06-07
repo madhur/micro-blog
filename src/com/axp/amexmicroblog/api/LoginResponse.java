@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({ "content", "lastPage", "firstPage", "totalElements",
 		"totalPages", "numberOfElements", "sort", "size", "number" })
-public class LoginResponse {
+public class LoginResponse extends BaseResponse{
 
 	@JsonProperty("content")
 	private List<Content> content = new ArrayList<Content>();

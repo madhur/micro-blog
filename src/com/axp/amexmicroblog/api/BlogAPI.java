@@ -14,7 +14,7 @@ public interface BlogAPI
 	LoginResponse Login(@Query("username") String username, @Header("Authorization") String header);
 
 	@GET("/usersfollowed")
-	ArrayList<String> GetUsersFollowed(@Query("username") String username, @Header("Authorization") String header);
+	String[] GetUsersFollowed(@Query("username") String username, @Header("Authorization") String header);
 
 	@GET("/userslike")
 	ArrayList<String> SearchUser(@Query("username") String username, @Header("Authorization") String header);

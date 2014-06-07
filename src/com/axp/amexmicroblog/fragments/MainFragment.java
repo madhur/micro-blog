@@ -1,12 +1,9 @@
 package com.axp.amexmicroblog.fragments;
 
 import com.axp.amexmicroblog.App;
-import com.axp.amexmicroblog.MessagesAdapter;
 import com.axp.amexmicroblog.R;
-import com.axp.amexmicroblog.R.id;
-import com.axp.amexmicroblog.R.layout;
+import com.axp.amexmicroblog.adapters.MessagesAdapter;
 
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,7 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-public class MainFragment extends Fragment
+public class MainFragment extends BaseFragment
 {
 	private ListView messagesListView;
 	private MessagesAdapter messagesAdapter;
@@ -24,8 +21,6 @@ public class MainFragment extends Fragment
 	public void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		
-		setHasOptionsMenu(true);
 	}
 	
 	@Override
@@ -39,8 +34,7 @@ public class MainFragment extends Fragment
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
-		super.onCreateOptionsMenu(menu, inflater);
-		
+		inflater.inflate(R.menu.main_menu, menu);
 		
 	}
 

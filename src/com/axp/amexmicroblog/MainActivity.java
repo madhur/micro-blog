@@ -1,6 +1,8 @@
 package com.axp.amexmicroblog;
 
+import com.axp.amexmicroblog.fragments.FollowersFragment;
 import com.axp.amexmicroblog.fragments.MainFragment;
+import com.axp.amexmicroblog.fragments.PostFragment;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -62,6 +64,8 @@ public class MainActivity extends Activity
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setDisplayShowHomeEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
+		
+		LoadMainFragment();
 
 	}
 
@@ -104,6 +108,13 @@ public class MainActivity extends Activity
 			selectItem(position);
 		}
 	}
+	
+	private void LoadMainFragment()
+	{
+		Fragment fragment=new MainFragment();
+		 getFragmentManager().beginTransaction().replace(R.id.content_frame,fragment).commit();
+		
+	}
 
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position)
@@ -113,10 +124,19 @@ public class MainActivity extends Activity
 		switch(position)
 		{
 			case 0:
-				 fragment=new MainFragment();
-				 getFragmentManager().beginTransaction().replace(R.id.content_frame,fragment).commit();
+				LoadMainFragment();
 				 break;
-			
+				 
+			case 1:
+				fragment=new FollowersFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+				break;
+				
+			case 2:
+				fragment=new PostFragment();
+				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+				break;
+				
 			case 4:
 				AboutDialog dialog=new AboutDialog();
 				dialog.show(getFragmentManager(), "about");
