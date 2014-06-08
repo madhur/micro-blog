@@ -18,13 +18,6 @@ public class LoginTask extends BaseTask
 	APIClient client;
 
 	@Override
-	protected void onPreExecute()
-	{
-		super.onPreExecute();
-		
-	}
-
-	@Override
 	protected LoginResponse doInBackground(TaskRequest... params)
 	{
 

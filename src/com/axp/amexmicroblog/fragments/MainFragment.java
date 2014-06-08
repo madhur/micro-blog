@@ -2,7 +2,6 @@ package com.axp.amexmicroblog.fragments;
 
 import java.util.ArrayList;
 
-import com.axp.amexmicroblog.App;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.adapters.MessagesAdapter;

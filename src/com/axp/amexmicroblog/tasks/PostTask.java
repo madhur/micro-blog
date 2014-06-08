@@ -13,18 +13,6 @@ public class PostTask extends BaseTask
 	}
 
 	@Override
-	protected void onPreExecute()
-	{
-		super.onPreExecute();
-	}
-
-	@Override
-	protected void onPostExecute(Object result)
-	{
-		super.onPostExecute(result);
-	}
-
-	@Override
 	protected Object doInBackground(TaskRequest... params)
 	{
 		String result;

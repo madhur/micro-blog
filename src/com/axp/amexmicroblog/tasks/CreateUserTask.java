@@ -1,7 +1,9 @@
 package com.axp.amexmicroblog.tasks;
 
 import android.content.Context;
+import android.util.Log;
 
+import com.axp.amexmicroblog.Consts;
 import com.axp.amexmicroblog.TaskListener;
 
 public class CreateUserTask extends BaseTask
@@ -15,7 +17,7 @@ public class CreateUserTask extends BaseTask
 	@Override
 	protected Object doInBackground(TaskRequest... params)
 	{
-		String result="";
+		String result = "";
 
 		try
 		{
@@ -23,7 +25,17 @@ public class CreateUserTask extends BaseTask
 		}
 		catch (Exception e)
 		{
-			result = e.getMessage();
+			if (e.getMessage() != null)
+			{
+				Log.e(Consts.TAG, e.getMessage());
+				result = e.getMessage();
+			}
+			else
+			{
+				Log.e(Consts.TAG, "Error while registering");
+				return "Error during Registration";
+			}
+
 		}
 
 		return result;

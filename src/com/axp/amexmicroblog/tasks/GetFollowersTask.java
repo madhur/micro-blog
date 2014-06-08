@@ -13,20 +13,6 @@ public class GetFollowersTask extends BaseTask
 	
 
 	@Override
-	protected void onPostExecute(Object result)
-	{
-		super.onPostExecute(result);
-
-	}
-	
-	@Override
-	protected void onPreExecute()
-	{
-		super.onPreExecute();
-	}
-
-
-	@Override
 	protected Object doInBackground(TaskRequest... params)
 	{
 		String response[] = client.GetFollowers();
