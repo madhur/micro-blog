@@ -4,10 +4,10 @@ import android.content.Context;
 
 import com.axp.amexmicroblog.TaskListener;
 
-public class PostTask extends BaseTask
+public class SearchUserTask extends BaseTask
 {
 
-	public PostTask(Context context, TaskListener listener)
+	public SearchUserTask(Context context, TaskListener listener)
 	{
 		super(context, listener);
 	}
@@ -15,17 +15,14 @@ public class PostTask extends BaseTask
 	@Override
 	protected Object doInBackground(TaskRequest... params)
 	{
-		String result = null;
 		try
 		{
-			client.CreatePost(params[0].getPostMessage());
+			return client.SearchUsers(params[0].getSearchString());
 		}
 		catch (Exception e)
 		{
-			result= e.getMessage();
+			return e.getMessage();
 		}
-
-		return result;
-
 	}
+
 }

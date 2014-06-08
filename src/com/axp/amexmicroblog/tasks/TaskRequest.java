@@ -8,6 +8,7 @@ public class TaskRequest
 	private String targetUser;
 	private String targetUserPassword;
 	private boolean isFollow;
+	private String searchString;
 	
 	public String getUsername()
 	{
@@ -56,6 +57,14 @@ public class TaskRequest
 	public void setTargetUserPassword(String targetUserPassword)
 	{
 		this.targetUserPassword = targetUserPassword;
+	}
+	public String getSearchString()
+	{
+		return searchString;
+	}
+	public void setSearchString(String searchString)
+	{
+		this.searchString = searchString;
 	}
 
 }

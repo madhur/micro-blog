@@ -3,6 +3,7 @@ package com.axp.amexmicroblog;
 import com.axp.amexmicroblog.fragments.FollowersFragment;
 import com.axp.amexmicroblog.fragments.MainFragment;
 import com.axp.amexmicroblog.fragments.PostFragment;
+import com.axp.amexmicroblog.fragments.SearchResultsFragment;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 
@@ -119,8 +120,18 @@ public class MainActivity extends Activity
 	public void LoadMainFragment()
 	{
 		Fragment fragment = new MainFragment();
-		getFragmentManager().beginTransaction().addToBackStack("main").replace(R.id.content_frame, fragment).commit();
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
 
+	}
+	
+	public void LoadResultsFragment(String[] response)
+	{
+		Fragment fragment=new SearchResultsFragment();
+		Bundle data=new Bundle();
+		
+		data.putStringArray("followers", response);
+		fragment.setArguments(data);
+		getFragmentManager().beginTransaction().addToBackStack("search").replace(R.id.content_frame, fragment).commit();
 	}
 
 	@Override

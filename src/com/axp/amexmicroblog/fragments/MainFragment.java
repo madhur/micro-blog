@@ -2,15 +2,18 @@ package com.axp.amexmicroblog.fragments;
 
 import java.util.ArrayList;
 
+import com.axp.amexmicroblog.Consts;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.adapters.MessagesAdapter;
 import com.axp.amexmicroblog.api.Content;
 import com.axp.amexmicroblog.api.LoginResponse;
 import com.axp.amexmicroblog.tasks.LoginTask;
+import com.axp.amexmicroblog.tasks.MessagesTask;
 import com.axp.amexmicroblog.tasks.TaskRequest;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,12 +28,6 @@ public class MainFragment extends BaseFragment implements TaskListener
 	private ListView messagesListView;
 	private MessagesAdapter messagesAdapter;
 	private ProgressBar progressBar;
-
-	@Override
-	public void onCreate(Bundle savedInstanceState)
-	{
-		super.onCreate(savedInstanceState);
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -69,7 +66,7 @@ public class MainFragment extends BaseFragment implements TaskListener
 		messagesListView = (ListView) getView().findViewById(R.id.messagesListView);
 		progressBar = (ProgressBar) getView().findViewById(R.id.progressBar);
 
-		new LoginTask(getActivity(), MainFragment.this).execute(new TaskRequest());
+		new MessagesTask(getActivity(), MainFragment.this).execute(new TaskRequest());
 
 	}
 
@@ -82,7 +79,7 @@ public class MainFragment extends BaseFragment implements TaskListener
 	@Override
 	public void OnTaskFinished(Object result)
 	{
-
+		
 		progressBar.setVisibility(View.GONE);
 
 		LoginResponse response = (LoginResponse) result;
@@ -91,6 +88,7 @@ public class MainFragment extends BaseFragment implements TaskListener
 			if (messagesAdapter != null)
 			{
 				messagesAdapter.SetMessages((ArrayList<Content>) (response.getContent()));
+				messagesListView.setAdapter(messagesAdapter);
 				messagesAdapter.notifyDataSetChanged();
 			}
 			else

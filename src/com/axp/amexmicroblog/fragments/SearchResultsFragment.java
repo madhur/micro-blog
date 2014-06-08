@@ -4,7 +4,6 @@ import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.adapters.FollowerAdapter;
-import com.axp.amexmicroblog.tasks.GetFollowersTask;
 import com.axp.amexmicroblog.tasks.SearchUserTask;
 import com.axp.amexmicroblog.tasks.TaskRequest;
 
@@ -22,18 +21,40 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-public class FollowersFragment extends BaseFragment implements TaskListener
+public class SearchResultsFragment extends BaseFragment
 {
-	private ListView followersListView;
+	private ListView resultsListView;
 
+	
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		View v = inflater.inflate(R.layout.fragment_follower, container, false);
+		View v=inflater.inflate(R.layout.fragment_searchresults, container, false);
 		return v;
-
 	}
+	
+	@Override
+	public void onActivityCreated(Bundle savedInstanceState)
+	{
+		super.onActivityCreated(savedInstanceState);
+		
+		resultsListView = (ListView) getView().findViewById(R.id.searchResultsListView);
+		
+		String responses[];
+		
+		Bundle data=getArguments();
+		if(data!=null)
+		{
+			responses=data.getStringArray("followers");
+			
+			FollowerAdapter adapter = new FollowerAdapter(responses, getActivity());
 
+			resultsListView.setAdapter(adapter);
+			
+		}
+	}
+	
+	
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -94,32 +115,6 @@ public class FollowersFragment extends BaseFragment implements TaskListener
 
 		};
 		searchView.setOnQueryTextListener(textChangeListener);
-
-	}
-
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState)
-	{
-		super.onActivityCreated(savedInstanceState);
-		followersListView = (ListView) getView().findViewById(R.id.followersListView);
-		new GetFollowersTask(getActivity(), FollowersFragment.this).execute(new TaskRequest());
-
-	}
-
-	@Override
-	public void OnTaskStarted()
-	{
-
-	}
-
-	@Override
-	public void OnTaskFinished(Object result)
-	{
-		String followers[] = (String[]) result;
-
-		FollowerAdapter adapter = new FollowerAdapter(followers, getActivity());
-
-		followersListView.setAdapter(adapter);
 
 	}
 

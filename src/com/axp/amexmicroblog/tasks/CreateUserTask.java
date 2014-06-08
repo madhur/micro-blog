@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.axp.amexmicroblog.Consts;
 import com.axp.amexmicroblog.TaskListener;
+import com.axp.amexmicroblog.api.APIClient;
 
 public class CreateUserTask extends BaseTask
 {
@@ -21,10 +22,11 @@ public class CreateUserTask extends BaseTask
 
 		try
 		{
-			client.CreateUser(params[0].getTargetUser(), params[0].getTargetUserPassword());
+			APIClient.CreateUser(params[0].getTargetUser(), params[0].getTargetUserPassword());
 		}
 		catch (Exception e)
 		{
+			e.printStackTrace();
 			if (e.getMessage() != null)
 			{
 				Log.e(Consts.TAG, e.getMessage());

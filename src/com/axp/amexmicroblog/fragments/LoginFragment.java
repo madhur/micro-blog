@@ -34,6 +34,7 @@ public class LoginFragment extends Fragment implements TaskListener
 
 	private ProgressBar progressBar;
 	private LinearLayout loginPanel;
+	private AppPreferences appPreferences;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
@@ -86,15 +87,15 @@ public class LoginFragment extends Fragment implements TaskListener
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 
-		AppPreferences appPreferences = new AppPreferences(getActivity());
+		appPreferences = new AppPreferences(getActivity());
 		super.onActivityCreated(savedInstanceState);
 
 		String userName = appPreferences.getMetadata(Keys.USERNAME);
 		String password = appPreferences.getMetadata(Keys.PASSWORD);
-		
-		if(TextUtils.isEmpty(userName) || TextUtils.isEmpty(password))
+
+		if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password))
 			return;
-		
+
 		new LoginTask(getActivity(), LoginFragment.this).execute(GetLoginRequestObj(userName, password));
 
 	}
@@ -128,6 +129,11 @@ public class LoginFragment extends Fragment implements TaskListener
 			App app = (App) getActivity().getApplicationContext();
 
 			app.setLoginResponse((LoginResponse) result);
+
+			final EditText usernameEditText = ((EditText) getView().findViewById(R.id.UserNameEditText));
+			final EditText passwordEditText = ((EditText) getView().findViewById(R.id.PasswordEditText));
+
+			appPreferences.SaveCredentials(usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
 			Intent i = new Intent();
 			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK

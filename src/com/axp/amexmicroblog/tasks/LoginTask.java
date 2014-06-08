@@ -14,9 +14,6 @@ public class LoginTask extends BaseTask
 		super(context, listener);
 	}
 
-	String username, password;
-	APIClient client;
-
 	@Override
 	protected LoginResponse doInBackground(TaskRequest... params)
 	{

@@ -17,7 +17,7 @@ public interface BlogAPI
 	String[] GetUsersFollowed(@Query("username") String username, @Header("Authorization") String header);
 
 	@GET("/userslike")
-	String[] SearchUser(@Query("username") String username, @Header("Authorization") String header);
+	String[] SearchUser(@Query("username") String searchString, @Header("Authorization") String header);
 
 	@POST("/followuser")
 	@FormUrlEncoded
@@ -29,10 +29,10 @@ public interface BlogAPI
 
 	@POST("/createPost")
 	@FormUrlEncoded
-	String CreatePost(@Field("username") String username, @Field("message") String postMessage, @Header("Authorization") String header);
+	Object CreatePost(@Field("username") String username, @Field("message") String postMessage, @Header("Authorization") String header);
 
 	@POST("/createuser")
 	@FormUrlEncoded
-	String CreateUser(@Field("username") String username, @Field("plainTextPassword") String password);
+	Object CreateUser(@Field("username") String username, @Field("plainTextPassword") String password);
 
 }

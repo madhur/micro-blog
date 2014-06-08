@@ -3,6 +3,7 @@ package com.axp.amexmicroblog.api;
 import com.axp.amexmicroblog.Consts;
 
 import android.util.Base64;
+import android.util.Log;
 import retrofit.RestAdapter;
 
 public class APIClient
@@ -26,7 +27,7 @@ public class APIClient
 		{
 			adapter = new RestAdapter.Builder().setEndpoint(Consts.LOGIN_API_URL).build();
 
-			if (client == null)
+			if (client == null || userName == null || authHeader == null || !username.equalsIgnoreCase(userName))
 			{
 				client = new APIClient();
 
@@ -49,26 +50,39 @@ public class APIClient
 
 	public LoginResponse GetMessageList()
 	{
+		Log.v(Consts.TAG, userName);
+		Log.v(Consts.TAG, authHeader);
 		LoginResponse response = blogApi.Login(userName, authHeader);
 		return response;
 	}
 
-	public String CreatePost(String message)
+	public void CreatePost(String message)
 	{
-		return blogApi.CreatePost(userName, message, authHeader);
+		blogApi.CreatePost(userName, message, authHeader);
 	}
-	
-	public void CreateUser(String username, String password)
+
+	public static void CreateUser(String username, String password)
 	{
+		if (blogApi == null)
+		{
+			adapter = new RestAdapter.Builder().setEndpoint(Consts.LOGIN_API_URL).build();
+			blogApi = adapter.create(BlogAPI.class);
+		}
+		
 		blogApi.CreateUser(username, password);
 	}
 
 	public void SetUserStatus(String targetUser, boolean isFollow)
 	{
 		if (isFollow)
-			 blogApi.FollowUser(userName, targetUser, authHeader);
+			blogApi.FollowUser(userName, targetUser, authHeader);
 		else
-			 blogApi.UnFollowUser(userName, targetUser, authHeader);
+			blogApi.UnFollowUser(userName, targetUser, authHeader);
+	}
+	
+	public String[] SearchUsers(String searchString)
+	{
+		return blogApi.SearchUser(searchString, authHeader);
 	}
 
 	public String[] GetFollowers()
