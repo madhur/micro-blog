@@ -119,7 +119,7 @@ public class MainActivity extends Activity
 	public void LoadMainFragment()
 	{
 		Fragment fragment = new MainFragment();
-		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+		getFragmentManager().beginTransaction().addToBackStack("main").replace(R.id.content_frame, fragment).commit();
 
 	}
 
@@ -144,12 +144,12 @@ public class MainActivity extends Activity
 
 			case 1:
 				fragment = new FollowersFragment();
-				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+				getFragmentManager().beginTransaction().addToBackStack("followers").replace(R.id.content_frame, fragment).commit();
 				break;
 
 			case 2:
 				fragment = new PostFragment();
-				getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+				getFragmentManager().beginTransaction().addToBackStack("post").replace(R.id.content_frame, fragment).commit();
 				break;
 
 			case 3:
@@ -160,6 +160,8 @@ public class MainActivity extends Activity
 					@Override
 					public void onClick(DialogInterface dialog, int which)
 					{
+						new AppPreferences(MainActivity.this).ClearTokens();
+						
 						Intent i = new Intent();
 						i.setClass(MainActivity.this, LoginActivity.class);
 						i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK

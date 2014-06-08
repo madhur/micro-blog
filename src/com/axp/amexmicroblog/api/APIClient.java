@@ -11,7 +11,7 @@ public class APIClient
 	private static APIClient client;
 	private static RestAdapter adapter;
 	private static BlogAPI blogApi;
-	private static String userName, passWord, authHeader;
+	private static String userName, authHeader;
 
 	private APIClient()
 	{
@@ -33,7 +33,6 @@ public class APIClient
 				blogApi = adapter.create(BlogAPI.class);
 
 				userName = username;
-				passWord = password;
 				authHeader = EncodePassword(username, password);
 
 				return client;
@@ -57,6 +56,11 @@ public class APIClient
 	public String CreatePost(String message)
 	{
 		return blogApi.CreatePost(userName, message, authHeader);
+	}
+	
+	public void CreateUser(String username, String password)
+	{
+		blogApi.CreateUser(username, password);
 	}
 
 	public void SetUserStatus(String targetUser, boolean isFollow)

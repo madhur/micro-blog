@@ -6,6 +6,7 @@ public class TaskRequest
 	private String password;
 	private String postMessage;
 	private String targetUser;
+	private String targetUserPassword;
 	private boolean isFollow;
 	
 	public String getUsername()
@@ -47,6 +48,14 @@ public class TaskRequest
 	public void setFollow(boolean isFollow)
 	{
 		this.isFollow = isFollow;
+	}
+	public String getTargetUserPassword()
+	{
+		return targetUserPassword;
+	}
+	public void setTargetUserPassword(String targetUserPassword)
+	{
+		this.targetUserPassword = targetUserPassword;
 	}
 
 }

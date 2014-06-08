@@ -49,12 +49,18 @@
             android:layout_height="wrap_content"
             android:password="true" >
         </EditText>
-
-        <Button
+        
+         <Button
             android:id="@+id/LoginButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Login" />
+
+        <Button
+            android:id="@+id/RegisterButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register" />
     </LinearLayout>
 
 </FrameLayout>
