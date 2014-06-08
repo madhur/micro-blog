@@ -50,8 +50,6 @@ public class APIClient
 
 	public LoginResponse GetMessageList()
 	{
-		Log.v(Consts.TAG, userName);
-		Log.v(Consts.TAG, authHeader);
 		LoginResponse response = blogApi.Login(userName, authHeader);
 		return response;
 	}

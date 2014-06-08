@@ -2,18 +2,16 @@ package com.axp.amexmicroblog.fragments;
 
 import java.util.ArrayList;
 
-import com.axp.amexmicroblog.Consts;
+import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.adapters.MessagesAdapter;
 import com.axp.amexmicroblog.api.Content;
 import com.axp.amexmicroblog.api.LoginResponse;
-import com.axp.amexmicroblog.tasks.LoginTask;
 import com.axp.amexmicroblog.tasks.MessagesTask;
 import com.axp.amexmicroblog.tasks.TaskRequest;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -49,11 +47,13 @@ public class MainFragment extends BaseFragment implements TaskListener
 	{
 		if (item.getItemId() == R.id.add_post)
 		{
+			MainActivity activity=(MainActivity) getActivity();
+			activity.LoadPostFragment();
 
 		}
 		else if (item.getItemId() == R.id.refresh)
 		{
-			new LoginTask(getActivity(), MainFragment.this).execute(new TaskRequest());
+			new MessagesTask(getActivity(), MainFragment.this).execute(new TaskRequest());
 		}
 		return super.onOptionsItemSelected(item);
 	}

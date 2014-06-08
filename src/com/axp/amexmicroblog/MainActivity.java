@@ -30,6 +30,8 @@ public class MainActivity extends Activity
 	private DrawerLayout mDrawerLayout;
 	private ListView mDrawerList;
 	private ActionBarDrawerToggle mDrawerToggle;
+	private Fragment mainFragment, followersFragment, postFragment,
+			resultsFragment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -119,19 +121,49 @@ public class MainActivity extends Activity
 
 	public void LoadMainFragment()
 	{
-		Fragment fragment = new MainFragment();
-		getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+		if (mainFragment == null)
+		{
+			mainFragment = new MainFragment();
+		}
+
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, mainFragment).commit();
 
 	}
 	
+	public void LoadFollowersFragment()
+	{
+		if(followersFragment==null)
+		{
+			followersFragment=new FollowersFragment();
+		}
+		
+		followersFragment = new FollowersFragment();
+		getFragmentManager().beginTransaction().addToBackStack("followers").replace(R.id.content_frame, followersFragment).commit();
+		
+	}
+
+	public void LoadPostFragment()
+	{
+		if (postFragment == null)
+		{
+			postFragment = new PostFragment();
+		}
+		getFragmentManager().beginTransaction().addToBackStack("post").replace(R.id.content_frame, postFragment).commit();
+	}
+
 	public void LoadResultsFragment(String[] response)
 	{
-		Fragment fragment=new SearchResultsFragment();
-		Bundle data=new Bundle();
+		if (resultsFragment == null)
+		{
+			resultsFragment = new SearchResultsFragment();
+
+		}
 		
+		Bundle data = new Bundle();
+
 		data.putStringArray("followers", response);
-		fragment.setArguments(data);
-		getFragmentManager().beginTransaction().addToBackStack("search").replace(R.id.content_frame, fragment).commit();
+		resultsFragment.setArguments(data);
+		getFragmentManager().beginTransaction().addToBackStack("search").replace(R.id.content_frame, resultsFragment).commit();
 	}
 
 	@Override
@@ -145,7 +177,6 @@ public class MainActivity extends Activity
 	/** Swaps fragments in the main content view */
 	private void selectItem(int position)
 	{
-		Fragment fragment;
 
 		switch (position)
 		{
@@ -154,13 +185,11 @@ public class MainActivity extends Activity
 				break;
 
 			case 1:
-				fragment = new FollowersFragment();
-				getFragmentManager().beginTransaction().addToBackStack("followers").replace(R.id.content_frame, fragment).commit();
+				LoadFollowersFragment();
 				break;
 
 			case 2:
-				fragment = new PostFragment();
-				getFragmentManager().beginTransaction().addToBackStack("post").replace(R.id.content_frame, fragment).commit();
+				LoadPostFragment();
 				break;
 
 			case 3:
@@ -172,7 +201,7 @@ public class MainActivity extends Activity
 					public void onClick(DialogInterface dialog, int which)
 					{
 						new AppPreferences(MainActivity.this).ClearTokens();
-						
+
 						Intent i = new Intent();
 						i.setClass(MainActivity.this, LoginActivity.class);
 						i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK

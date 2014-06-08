@@ -8,18 +8,9 @@ import android.app.Application;
 public class App extends Application
 {
 	
-	private LoginResponse loginResponse;
 	private APIClient apiClient;
-
-	public LoginResponse getLoginResponse()
-	{
-		return loginResponse;
-	}
-
-	public void setLoginResponse(LoginResponse loginResponse)
-	{
-		this.loginResponse = loginResponse;
-	}
+	private String[] followers;
+	
 
 	public APIClient getApiClient()
 	{
@@ -29,6 +20,16 @@ public class App extends Application
 	public void setApiClient(APIClient apiClient)
 	{
 		this.apiClient = apiClient;
+	}
+
+	public String[] getFollowers()
+	{
+		return followers;
+	}
+
+	public void setFollowers(String[] followers)
+	{
+		this.followers = followers;
 	}
 
 }

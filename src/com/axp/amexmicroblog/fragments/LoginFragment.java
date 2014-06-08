@@ -8,7 +8,6 @@ import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.AppPreferences.Keys;
-import com.axp.amexmicroblog.api.LoginResponse;
 import com.axp.amexmicroblog.tasks.LoginTask;
 import com.axp.amexmicroblog.tasks.TaskRequest;
 
@@ -92,6 +91,9 @@ public class LoginFragment extends Fragment implements TaskListener
 
 		String userName = appPreferences.getMetadata(Keys.USERNAME);
 		String password = appPreferences.getMetadata(Keys.PASSWORD);
+		
+		Log.v(Consts.TAG, "username: " + userName);
+		Log.v(Consts.TAG, "passwordL :+"+password);
 
 		if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password))
 			return;
@@ -126,9 +128,9 @@ public class LoginFragment extends Fragment implements TaskListener
 		{
 			Log.v(Consts.TAG, result.toString());
 
-			App app = (App) getActivity().getApplicationContext();
+			//App app = (App) getActivity().getApplicationContext();
 
-			app.setLoginResponse((LoginResponse) result);
+			//app.setLoginResponse((LoginResponse) result);
 
 			final EditText usernameEditText = ((EditText) getView().findViewById(R.id.UserNameEditText));
 			final EditText passwordEditText = ((EditText) getView().findViewById(R.id.PasswordEditText));

@@ -19,7 +19,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class FollowerAdapter extends MyBaseAdapter
 {
-	private String[] followers;
+	protected String[] followers;
 	
 	public FollowerAdapter(String[] followers, Context context)
 	{
@@ -86,12 +86,7 @@ public class FollowerAdapter extends MyBaseAdapter
 					@Override
 					public void OnTaskFinished(Object result)
 					{
-		//				if(TextUtils.isEmpty((CharSequence) result))
-			//			{
 							Crouton.showText((Activity) context, "Successfully saved changes for " + userName, Style.INFO);
-				//		}
-	//					else
-//							Crouton.showText((Activity) context, (CharSequence) result, Style.INFO);
 					}
 				}).execute(request);
 				

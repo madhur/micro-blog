@@ -4,6 +4,7 @@ import com.axp.amexmicroblog.MainActivity;
 import com.axp.amexmicroblog.R;
 import com.axp.amexmicroblog.TaskListener;
 import com.axp.amexmicroblog.adapters.FollowerAdapter;
+import com.axp.amexmicroblog.adapters.ResultsAdapter;
 import com.axp.amexmicroblog.tasks.SearchUserTask;
 import com.axp.amexmicroblog.tasks.TaskRequest;
 
@@ -21,7 +22,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.SearchView;
 
-public class SearchResultsFragment extends BaseFragment
+public class SearchResultsFragment extends SearchFragment
 {
 	private ListView resultsListView;
 
@@ -47,75 +48,11 @@ public class SearchResultsFragment extends BaseFragment
 		{
 			responses=data.getStringArray("followers");
 			
-			FollowerAdapter adapter = new FollowerAdapter(responses, getActivity());
+			ResultsAdapter adapter = new ResultsAdapter(responses, getActivity());
 
 			resultsListView.setAdapter(adapter);
 			
 		}
 	}
 	
-	
-	@Override
-	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
-	{
-		inflater.inflate(R.menu.followers_menu, menu);
-
-		// Associate searchable configuration with the SearchView
-		SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.search_user).getActionView();
-		searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
-		SearchView.OnQueryTextListener textChangeListener = new SearchView.OnQueryTextListener()
-		{
-			TaskRequest req = new TaskRequest();
-
-			@Override
-			public boolean onQueryTextChange(String newText)
-			{
-
-				return true;
-			}
-
-			@Override
-			public boolean onQueryTextSubmit(final String query)
-			{
-				req.setSearchString(query);
-
-				new SearchUserTask(getActivity(), new TaskListener()
-				{
-
-					@Override
-					public void OnTaskStarted()
-					{
-					}
-
-					@Override
-					public void OnTaskFinished(Object result)
-					{
-						String[] response = (String[]) result;
-
-						if (response != null && response.length > 0)
-						{
-
-							MainActivity activity = (MainActivity) getActivity();
-							activity.LoadResultsFragment(response);
-							
-							
-							
-						}
-						else
-						{
-							Crouton.showText(getActivity(), "No users found with specified search", Style.CONFIRM);
-						}
-					}
-				}).execute(req);
-
-				return true;
-			}
-
-		};
-		searchView.setOnQueryTextListener(textChangeListener);
-
-	}
-
 }
