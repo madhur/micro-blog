@@ -135,6 +135,9 @@ public class LoginFragment extends Fragment implements TaskListener
 			final EditText usernameEditText = ((EditText) getView().findViewById(R.id.UserNameEditText));
 			final EditText passwordEditText = ((EditText) getView().findViewById(R.id.PasswordEditText));
 
+			Log.d("TAG", "Saving " +usernameEditText.getText().toString() );
+			Log.d("TAG", "Saving " +passwordEditText.getText().toString() );
+			
 			appPreferences.SaveCredentials(usernameEditText.getText().toString(), passwordEditText.getText().toString());
 
 			Intent i = new Intent();

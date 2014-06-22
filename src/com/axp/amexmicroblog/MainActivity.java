@@ -121,44 +121,45 @@ public class MainActivity extends Activity
 
 	public void LoadMainFragment()
 	{
-		if (mainFragment == null)
-		{
-			mainFragment = new MainFragment();
-		}
+//		if (mainFragment == null)
+//		{
+//			mainFragment = new MainFragment();
+//		}
 
-		getFragmentManager().beginTransaction().replace(R.id.content_frame, mainFragment).commit();
+		getFragmentManager().beginTransaction().replace(R.id.content_frame, new MainFragment()).commit();
 
 	}
 	
 	public void LoadFollowersFragment()
 	{
-		if(followersFragment==null)
-		{
-			followersFragment=new FollowersFragment();
-		}
+//		if(followersFragment==null)
+//		{
+//			followersFragment=new FollowersFragment();
+//		}
 		
 		followersFragment = new FollowersFragment();
-		getFragmentManager().beginTransaction().addToBackStack("followers").replace(R.id.content_frame, followersFragment).commit();
+		getFragmentManager().beginTransaction().addToBackStack("followers").replace(R.id.content_frame, new FollowersFragment()).commit();
 		
 	}
 
 	public void LoadPostFragment()
 	{
-		if (postFragment == null)
-		{
-			postFragment = new PostFragment();
-		}
-		getFragmentManager().beginTransaction().addToBackStack("post").replace(R.id.content_frame, postFragment).commit();
+//		if (postFragment == null)
+//		{
+//			postFragment = new PostFragment();
+//		}
+		getFragmentManager().beginTransaction().addToBackStack("post").replace(R.id.content_frame, new PostFragment()).commit();
 	}
 
 	public void LoadResultsFragment(String[] response)
 	{
-		if (resultsFragment == null)
-		{
-			resultsFragment = new SearchResultsFragment();
-
-		}
-		
+//		if (resultsFragment == null)
+//		{
+//			resultsFragment = new SearchResultsFragment();
+//
+//		}
+//		
+		resultsFragment=new SearchResultsFragment();
 		Bundle data = new Bundle();
 
 		data.putStringArray("followers", response);

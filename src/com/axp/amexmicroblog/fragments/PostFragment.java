@@ -9,6 +9,7 @@ import com.axp.amexmicroblog.tasks.TaskRequest;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -29,7 +30,16 @@ public class PostFragment extends BaseFragment implements TaskListener
 		
 		View v=inflater.inflate(R.layout.fragment_post, container, false);
 		postEditText=(EditText) v.findViewById(R.id.postEditText);
+		
 		return v;
+	}
+	
+	@Override
+	public void onAttach(Activity activity)
+	{
+		// TODO Auto-generated method stub
+		super.onAttach(activity);
+		
 	}
 	
 	@Override
